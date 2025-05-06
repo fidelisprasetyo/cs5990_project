@@ -9,6 +9,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_curve, auc
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import f1_score
+from sklearn.tree import plot_tree
 
 import kagglehub
 
@@ -75,8 +76,8 @@ conf_matrix = confusion_matrix(y_test, y_pred)
 plt.figure(figsize=(8, 6))
 sns.heatmap(conf_matrix, annot=True, fmt='g', cmap='Blues', cbar=False)
 plt.title('Confusion Matrix Heatmap')
-plt.xlabel('Predicted Labels')
-plt.ylabel('True Labels')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
 plt.show()
 
 # feature importances
@@ -98,7 +99,7 @@ plt.plot(fpr, tpr)
 plt.plot([0, 1], [0, 1], linestyle='--', color='gray')
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ROC Curve - Random Forest')
+plt.title('ROC Curve')
 plt.legend()
 plt.grid(True)
 plt.show()
@@ -113,6 +114,16 @@ plt.title("F1-Score by Class")
 plt.ylim(0, 1)
 plt.show()
 
+# print one tree
+estimator = clf.estimators_[0]
+plt.figure(figsize=(20, 10))
+plot_tree(estimator,
+          feature_names=X.columns,
+          class_names=['Rejected', 'Approved'],
+          filled=True,
+          rounded=True,
+          max_depth=3)
+plt.show()
 
 # -----------------grid search & cross validation (10)-------------------
 
