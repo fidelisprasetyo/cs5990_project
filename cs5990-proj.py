@@ -18,6 +18,9 @@ import kagglehub
 #df = pd.read_csv(path + '/loan_data.csv')
 df = pd.read_csv('./loan_data.csv')
 
+# drop missing values
+df = df.dropna()
+
 # encode categorical data
 df_encoded = pd.get_dummies(df, drop_first=True)
 
